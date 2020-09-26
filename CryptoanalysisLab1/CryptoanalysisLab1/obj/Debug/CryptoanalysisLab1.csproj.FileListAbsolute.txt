@@ -1,0 +1,7 @@
+C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\bin\Debug\CryptoanalysisLab1.exe.config
+C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\bin\Debug\CryptoanalysisLab1.exe
+C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\bin\Debug\CryptoanalysisLab1.pdb
+C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\obj\Debug\CryptoanalysisLab1.csprojAssemblyReference.cache
+C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\obj\Debug\CryptoanalysisLab1.csproj.ResolveComReference.cache
+C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\obj\Debug\CryptoanalysisLab1.exe
+C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\obj\Debug\CryptoanalysisLab1.pdb
