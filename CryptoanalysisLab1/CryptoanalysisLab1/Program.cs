@@ -8,5 +8,9 @@ namespace CryptoanalysisLab1 {
     class Program {
         static void Main(string[] args) {
         }
+
+        void DoLab(int variant) {
+            
+        }
     }
 }
