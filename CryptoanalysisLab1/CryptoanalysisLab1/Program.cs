@@ -10,7 +10,7 @@ namespace CryptoanalysisLab1 {
     class Program {
         static void Main(string[] args) {
 
-            DoLab(3);
+            DoLab(6);
             Console.ReadKey();
 
         }
@@ -50,19 +50,29 @@ namespace CryptoanalysisLab1 {
 
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++)
-                    P_C[CypherTable[i,j]] += P_MK[i,j];
+                    P_C[CypherTable[i,j]] += P_MK[j,i];
             }
 
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++)
-                    for (int k = 0; k < 20; k++)
-                        P_MC[i,CypherTable[j, k]] += P_MK[j, k];
+                    P_MC[i,CypherTable[i, j]] += P_MK[j, i];
             }
 
             for (int i = 0; i<20; i++)
                 for (int j = 0; j < 20; j++)
-                    P_M1C[i,j] = P_MK[i,j]/P_C[j];
+                    P_M1C[i,j] = P_MC[i,j]/P_C[j];
 
+            Console.WriteLine(DeterminingFunc(P_M1C));
+        }
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||
+
+        static int DeterminingFunc(double[,] P_M1C) {
+            
+            int C = 16;
+            int result = 0;
+            for (int i = 1; i<20; i++) 
+                if(P_M1C[i,C] > P_M1C[i-1, C]) result = i;       
+            return result;
         }
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||
@@ -70,15 +80,15 @@ namespace CryptoanalysisLab1 {
     class Excel {
 
         string path = "";
-        _Application excel = new _Excel.Application();
-        Workbook wb;
-        Worksheet ws;
+        _Excel.Application excel = new _Excel.Application();
+        _Excel.Workbook wb;
+        _Excel.Worksheet ws;
 
         public Excel(string path) {
             
             this.path = path;
-            wb = excel.Workbooks.Open(path);
-            ws = wb.Worksheets[1];
+            this.wb = excel.Workbooks.Open(path);
+            this.ws = wb.Worksheets[1];
         }
 
         public double ReadCell(int row, int col) {
@@ -96,7 +106,9 @@ namespace CryptoanalysisLab1 {
 
         public void Quit() {
             
+            wb.Close();
             excel.Quit();
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
         }
     }
 }
