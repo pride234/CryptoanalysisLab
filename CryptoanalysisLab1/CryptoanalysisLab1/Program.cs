@@ -17,8 +17,36 @@ namespace CryptoanalysisLab1 {
 
         static void DoLab(int variant) {
             
-            Excel A = new Excel(@"C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\prob_0" + Convert.ToString(variant), 1);
-            Console.WriteLine(A.ReadCell(0,19));
+            double[] P_M = new double[20];
+            double[] P_K = new double[20];
+            double[] P_C = new double[20];
+            double[,] P_MK = new double[20,20];
+            int[,] CypherTable = new int[20,20];
+
+
+            Excel Distribution = new Excel(@"C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\prob_0" + Convert.ToString(variant));
+            
+            for (int i = 0; i<20; i++) { 
+
+                P_M[i] = Distribution.ReadCell(0,i);
+                P_K[i] = Distribution.ReadCell(1, i);
+            }
+
+            Distribution.Quit();
+
+            for (int i = 0; i<20; i++)
+                for (int j = 0; j < 20; j++)
+                    P_MK[i,j] = P_M[i]*P_K[j];
+
+            Excel CipherTableExcel = new Excel(@"C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\table_0" + Convert.ToString(variant));
+
+            for (int i = 0; i < 20; i++)
+                for (int j = 0; j < 20; j++)
+                    CypherTable[i, j] = Convert.ToInt32(CipherTableExcel.ReadCell(i,j));
+
+            CipherTableExcel.Quit();
+
+
         }
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||
@@ -30,22 +58,29 @@ namespace CryptoanalysisLab1 {
         Workbook wb;
         Worksheet ws;
 
-        public Excel(string path, int Sheet) {
+        public Excel(string path) {
             
             this.path = path;
             wb = excel.Workbooks.Open(path);
-            ws = wb.Worksheets[Sheet];
+            ws = wb.Worksheets[1];
         }
 
-        public string ReadCell(int row, int col) {
+        public double ReadCell(int row, int col) {
         
             row++;
             col++;
-            if (ws.Cells[row, col].Value2 == null)
-                return "";
-            string save = Convert.ToString(ws.Cells[row, col].Value);
-            excel.Quit();
+            if (ws.Cells[row, col].Value2 == null) { 
+                
+                Console.WriteLine("Null is returned! Cell({0},{1})", row, col);
+                return 0; 
+            }
+            double save = ws.Cells[row, col].Value;
             return save;
+        }
+
+        public void Quit() {
+            
+            excel.Quit();
         }
     }
 }
