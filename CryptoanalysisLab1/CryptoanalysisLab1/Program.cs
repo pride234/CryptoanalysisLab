@@ -22,6 +22,8 @@ namespace CryptoanalysisLab1 {
             double[] P_C = new double[20];
             double[,] P_MK = new double[20,20];
             int[,] CypherTable = new int[20,20];
+            double[,] P_MC = new double[20,20];
+            double[,] P_M1C = new double[20,20];
 
 
             Excel Distribution = new Excel(@"C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\prob_0" + Convert.ToString(variant));
@@ -46,6 +48,20 @@ namespace CryptoanalysisLab1 {
 
             CipherTableExcel.Quit();
 
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 20; j++)
+                    P_C[CypherTable[i,j]] += P_MK[i,j];
+            }
+
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 20; j++)
+                    for (int k = 0; k < 20; k++)
+                        P_MC[i,CypherTable[j, k]] += P_MK[j, k];
+            }
+
+            for (int i = 0; i<20; i++)
+                for (int j = 0; j < 20; j++)
+                    P_M1C[i,j] = P_MK[i,j]/P_C[j];
 
         }
     }
