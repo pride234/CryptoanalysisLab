@@ -65,13 +65,15 @@ namespace CryptoanalysisLab1 {
                     P_M1C[i,j] = P_MC[i,j]/P_C[j];
 
             DeterminingFunc(P_MC, P_M1C, CypherTable);
-            StocstochasticFunc(P_MC, P_M1C, CypherTable);
+            StochasticFunc(P_MC, P_M1C, CypherTable);
 
             Console.WriteLine("//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||\n");
         }
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||
 
         static void DeterminingFunc(double[,] P_MC, double[,] P_M1C, int[,] CypherTable) {
+
+            Console.WriteLine("Stochastic Function is operating...\n");
 
             double costs = 0;
             for (int j = 0; j < 20; j++) {
@@ -81,11 +83,13 @@ namespace CryptoanalysisLab1 {
                 if (CypherTable[j, result] != result) costs += P_MC[result, j];
                 Console.WriteLine("If CT is {0}, then OT is {1}", j, result);
             }
-            Console.WriteLine("\nAverage costs {0}", costs);
+            Console.WriteLine("\nAverage costs {0}\n", costs);
         }
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||
         
-        static void StocstochasticFunc(double[,] P_MC, double[,] P_M1C, int[,] CypherTable) {
+        static void StochasticFunc(double[,] P_MC, double[,] P_M1C, int[,] CypherTable) {
+
+            Console.WriteLine("Stochastic Function is operating...\n");
 
             double costs = 0;
             for (int j = 0; j < 20; j++) {
@@ -105,14 +109,17 @@ namespace CryptoanalysisLab1 {
 
                 double delta = 0;
                 delta = 1.0/num;
+                Console.Write("If CT is {0}, then OT is:", j);
                 for (int i = 0; i < 20; i++) {
                     double L = 0;
                     if (P_M1C[i, j] == max) { 
                         if(CypherTable[j, i] != i)
                             L+=delta;
                         costs += P_MC[i, j] * L;
+                        Console.Write(" {0},", i);
                     }
                 }
+                Console.Write(" with probabylyty {0}\n", delta);
             }
 
             Console.WriteLine("\nAverage costs {0}", costs);
