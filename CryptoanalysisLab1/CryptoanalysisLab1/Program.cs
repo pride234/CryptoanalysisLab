@@ -62,17 +62,21 @@ namespace CryptoanalysisLab1 {
                 for (int j = 0; j < 20; j++)
                     P_M1C[i,j] = P_MC[i,j]/P_C[j];
 
-            Console.WriteLine(DeterminingFunc(P_M1C));
+            DeterminingFunc(P_MC, P_M1C, CypherTable);
         }
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||
 
-        static int DeterminingFunc(double[,] P_M1C) {
-            
-            int C = 16;
-            int result = 0;
-            for (int i = 1; i<20; i++) 
-                if(P_M1C[i,C] > P_M1C[i-1, C]) result = i;       
-            return result;
+        static void DeterminingFunc(double[,] P_MC, double[,] P_M1C, int[,] CypherTable) {
+
+            double costs = 0;
+            for (int j = 0; j < 20; j++) {
+                int result = 0;
+                for (int i = 0; i<20; i++) 
+                    if(P_M1C[i,j] > P_M1C[result, j]) result = i;               
+                if (CypherTable[j, result] != result) costs += P_MC[result, j];
+                Console.WriteLine("If CT is {0}, then OT is {1}", j, result);
+            }
+            Console.WriteLine("Average costs {0}", costs);
         }
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~||
