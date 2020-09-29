@@ -36,8 +36,6 @@ namespace CryptoanalysisLab1 {
                 P_K[i] = Distribution.ReadCell(1, i);
             }
 
-            Distribution.Quit();
-
             for (int i = 0; i<20; i++)
                 for (int j = 0; j < 20; j++)
                     P_MK[i,j] = P_M[i]*P_K[j];
@@ -60,9 +58,19 @@ namespace CryptoanalysisLab1 {
                     P_MC[i,CypherTable[i, j]] += P_MK[j, i];
             }
 
-            for (int i = 0; i<20; i++)
-                for (int j = 0; j < 20; j++)
-                    P_M1C[i,j] = P_MC[i,j]/P_C[j];
+            Distribution.WriteCell(0, 0, 0);
+
+            for (int i = 0; i<20; i++) { 
+                Distribution.WriteCell(0, i+1, i);
+                for (int j = 0; j < 20; j++) {
+                    P_M1C[i, j] = P_MC[i, j] / P_C[j];
+                    Distribution.WriteCell(j+1, 0, j);
+                    Distribution.WriteCell(j+1, i+1, P_M1C[i, j]);
+                }
+            }
+
+            Distribution.SaveAs(@"C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\prodTable" + variant + ".csv" );
+            Distribution.Quit();
 
             DeterminingFunc(P_MC, P_M1C, CypherTable);
             StochasticFunc(P_MC, P_M1C, CypherTable);
@@ -154,11 +162,24 @@ namespace CryptoanalysisLab1 {
             return save;
         }
 
+        public void WriteCell (int row, int col, double num) {
+        
+            row++;
+            col++;
+            ws.Cells[row, col].Value2 = num;
+        }
+
         public void Quit() {
             
             wb.Close();
             excel.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+        }
+
+        public void SaveAs(string path) {
+        
+            wb.SaveAs(path);
+            wb.Save();
         }
     }
 }
