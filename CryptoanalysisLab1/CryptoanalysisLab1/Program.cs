@@ -46,6 +46,14 @@ namespace CryptoanalysisLab1 {
                 for (int j = 0; j < 20; j++)
                     CypherTable[i, j] = Convert.ToInt32(CipherTableExcel.ReadCell(i,j));
 
+
+            //----------------------------To check only---------------------------------
+            //for (int i = 0; i < 20; i++) 
+            //    for (int j = 0; j < 20; j++) 
+            //        Distribution.WriteCell(i, j, CypherTable[i,j]);
+            //----------------------------To check only---------------------------------
+            //Distribution.SaveAs(@"C:\Users\PRIDE\source\repos\CryptoanalysisLab\CryptoanalysisLab1\CryptoanalysisLab1\prodTable" + variant + ".csv");
+
             CipherTableExcel.Quit();
 
             for (int i = 0; i < 20; i++) {
@@ -55,7 +63,7 @@ namespace CryptoanalysisLab1 {
 
             for (int i = 0; i < 20; i++) {
                 for (int j = 0; j < 20; j++)
-                    P_MC[i,CypherTable[i, j]] += P_MK[j, i];
+                    P_MC[i,CypherTable[j, i]] += P_MK[i, j];
             }
 
             Distribution.WriteCell(0, 0, 0);
@@ -65,7 +73,7 @@ namespace CryptoanalysisLab1 {
                 for (int j = 0; j < 20; j++) {
                     P_M1C[i, j] = P_MC[i, j] / P_C[j];
                     Distribution.WriteCell(j+1, 0, j);
-                    Distribution.WriteCell(j+1, i+1, P_M1C[i, j]);
+                    Distribution.WriteCell(j+1, i+1, Math.Round(P_M1C[i, j],4));
                 }
             }
 
